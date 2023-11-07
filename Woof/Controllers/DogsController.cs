@@ -231,7 +231,7 @@ namespace Woof.Controllers
             var mother = _context.Dogs.FirstOrDefault(d => d.DogID == motherId);
             var father = _context.Dogs.FirstOrDefault(d => d.DogID == fatherId);
 
-            // Set ViewData values for the details you want to display
+            // Set ViewData values 
             ViewData["MotherID"] = motherId;
             ViewData["FatherID"] = fatherId;
             ViewData["BirthDate"] = birthDate;
