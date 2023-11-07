@@ -22,10 +22,10 @@ namespace Woof.Controllers
 
         public IActionResult Index()
         {
-            // Fetch the user data
+            // Get the user data
             var users = _context.Users.ToList();
 
-            // Fetch the roles and create a dictionary to map RoleID to RoleName
+            // Get the roles and create a dictionary to map RoleID to RoleName
             var roles = _context.Roles.ToDictionary(role => role.RoleID, role => role.RoleName);
 
             // Pass the users and roles to the view
@@ -75,7 +75,7 @@ namespace Woof.Controllers
                     return View(user);
                 }
 
-                user.RoleID = 1; // Assign RoleID here, as you are doing
+                user.RoleID = 1; // Assign RoleID 1 to new users
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -201,11 +201,11 @@ namespace Woof.Controllers
 
                 if (user != null)
                 {
-                    // Check if the password matches (you should use secure password hashing here)
+                    // Check if the password matches 
                     if (user.Password == loginModel.Password)
                     {
                         // User is authenticated
-                        Debug.WriteLine("User is authenticated"); // Add this debug message
+                        Debug.WriteLine("User is authenticated"); // Debug message
 
                         // Store user information in session
                         HttpContext.Session.SetString("UserID", user.UserID.ToString());
@@ -217,9 +217,9 @@ namespace Woof.Controllers
                         var usernameFromSession = HttpContext.Session.GetString("Username");
                         var roleFromSession = HttpContext.Session.GetString("Role");
 
-                        Debug.WriteLine("UserID in Session: " + UserIDFromSession); // Add this debug message
-                        Debug.WriteLine("Username in Session: " + usernameFromSession); // Add this debug message
-                        Debug.WriteLine("Role in Session: " + roleFromSession); // Add this debug message
+                        Debug.WriteLine("UserID in Session: " + UserIDFromSession); // Debug message
+                        Debug.WriteLine("Username in Session: " + usernameFromSession); // Debug message
+                        Debug.WriteLine("Role in Session: " + roleFromSession); // Debug message
 
                         // Redirect to the home page
                         return RedirectToAction("Index", "Home");
@@ -228,14 +228,14 @@ namespace Woof.Controllers
                     {
                         // Incorrect password
                         ViewBag.ErrorMessage = "Incorrect password.";
-                        Debug.WriteLine("Incorrect password"); // Add this debug message
+                        Debug.WriteLine("Incorrect password"); // Debug message
                     }
                 }
                 else
                 {
                     // Email doesn't exist
                     ViewBag.ErrorMessage = "There's no account linked to this email.";
-                    Debug.WriteLine("Email doesn't exist"); // Add this debug message
+                    Debug.WriteLine("Email doesn't exist"); // Debug message
                 }
             }
 
@@ -253,3 +253,4 @@ namespace Woof.Controllers
         }
     }
 }
+
