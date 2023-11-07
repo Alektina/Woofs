@@ -1,0 +1,144 @@
+﻿
+@model Woof.Models.Dog
+
+@{
+    ViewData["Title"] = "Details";
+    var countryNames = ViewData["CountryNames"] as Dictionary<int, string>;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Dog</h4>
+    <hr />
+    <dl class="row">
+        @if (!string.IsNullOrWhiteSpace(Model.RegNr))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RegNr)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.RegNr)
+            </dd>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Name))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Nickname))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nickname)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Nickname)
+            </dd>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Sex))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Sex)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Sex)
+            </dd>
+        }
+
+        @if (Model.CountryID != null)
+        {
+            <dt class="col-sm-2">
+                Country
+            </dt>
+            <dd class="col-sm-10">
+                @(countryNames.ContainsKey(Model.CountryID.Value) ? countryNames[Model.CountryID.Value] : "")
+            </dd>
+        }
+
+
+
+        @if (Model.BirthDate != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.BirthDate.Value.ToString("yyyy-MM-dd")
+            </dd>
+        }
+
+        <!-- Add similar conditional blocks for other properties -->
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        }
+
+        @if (Model.DeathDate != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DeathDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.DeathDate.Value.ToString("yyyy-MM-dd")
+            </dd>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Merits))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Merits)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Merits)
+            </dd>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Titles))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Titles)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Titles)
+            </dd>
+        }
+
+        @if (Model.MotherDogID != null && Model.FatherDogID != null && Model.BirthDate != null)
+        {
+            <dt class="col-sm-2">
+                Show Brood
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-action="ShowBrood" asp-route-motherId="@Model.MotherDogID" asp-route-fatherId="@Model.FatherDogID" asp-route-birthDate="@Model.BirthDate" class="btn btn-info">Show Brood</a>
+            </dd>
+        }
+
+        @if ((bool)ViewData["HasRelatedDogs"])
+        {
+            <dt class="col-sm-2">
+                Show Litter
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-action="ShowLitter" asp-route-motherId="@Model.DogID" asp-route-fatherId="@Model.DogID" class="btn btn-info">Show Litter</a>
+            </dd>
+        }
+
+
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DogID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

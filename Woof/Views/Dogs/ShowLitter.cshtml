@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Woof.Models.Dog>
+
+@{
+    ViewData["Title"] = "Show Litter";
+}
+
+<h1>Show Litter</h1>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>
+
+<div>
+    <h4>Common Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Parent
+        </dt>
+        <dd class="col-sm-10">
+            @if (ViewData["MotherID"] != null)
+            {
+                <a asp-action="Details" asp-route-id="@ViewData["MotherID"]">@ViewData["MotherName"]</a>
+            }
+            else if (ViewData["FatherID"] != null)
+            {
+                <a asp-action="Details" asp-route-id="@ViewData["FatherID"]">@ViewData["FatherName"]</a>
+            }
+        </dd>
+    </dl>
+</div>
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DogID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DogID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.DogID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

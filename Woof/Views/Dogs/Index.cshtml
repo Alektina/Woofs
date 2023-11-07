@@ -1,0 +1,190 @@
+﻿@model IEnumerable<Woof.Models.Dog>
+
+@{
+    ViewData["Title"] = "Index";
+    var countryNames = ViewData["CountryNames"] as Dictionary<int, string>;
+
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               ID
+            </th>
+            <th>
+                Reg nummer
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nickname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hairlayers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OriginalBreederID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentOwnerID)
+            </th>
+            <th>
+                Father
+            </th>
+            <th>
+                Mother
+            </th>
+            <th>
+                Brood
+            </th>
+            <th>
+                Litter
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Images)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeathDate)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Merits)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Titles)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DogID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNr)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nickname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+                <td>
+                    @{
+                        var countryName = "Unknown"; // Default value if CountryID is not found
+
+                        if (countryNames != null && item.CountryID.HasValue && countryNames.ContainsKey(item.CountryID.Value))
+                        {
+                            countryName = countryNames[item.CountryID.Value];
+                        }
+
+
+                        @countryName
+                    }
+                </td>
+
+                <td>
+                    @(item.BirthDate != null ? item.BirthDate.Value.ToString("yyyy-MM-dd") : "")
+                </td>
+               
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hairlayers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OriginalBreederID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentOwnerID)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherDogID)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotherDogID)
+            </td>
+            
+                <td>
+                    @Html.DisplayFor(modelItem => item.BroodID)
+                    @if (item.MotherDogID != null && item.FatherDogID != null && item.BirthDate != null)
+                    {
+                        <a asp-action="ShowBrood" asp-route-motherId="@item.MotherDogID" asp-route-fatherId="@item.FatherDogID" asp-route-birthDate="@item.BirthDate" class="btn btn-info">Show Brood</a>
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.LitterID)
+                    @if (Model.Any(otherDog => otherDog.MotherDogID == item.DogID || otherDog.FatherDogID == item.DogID))
+                    {
+                        <a asp-action="ShowLitter" asp-route-motherId="@item.DogID" asp-route-fatherId="@item.DogID" class="btn btn-info">Show Litter</a>
+                    }
+
+                </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+                <td>
+                @Html.DisplayFor(modelItem => item.Images)
+                </td>
+
+                <td>
+                @(item.DeathDate != null ? item.DeathDate.Value.ToString("yyyy-MM-dd") : "")
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merits)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titles)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DogID">Edit</a> <br>
+                <a asp-action="Details" asp-route-id="@item.DogID">Details</a><br>
+                <a asp-action="Delete" asp-route-id="@item.DogID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

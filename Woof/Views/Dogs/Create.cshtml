@@ -1,0 +1,116 @@
+﻿@model Woof.Models.Dog
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Dog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CountryID" class="control-label"></label>
+                <select asp-for="CountryID" asp-items="ViewBag.Countries" class="form-control"></select>
+                <span asp-validation-for="CountryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegNr" class="control-label"></label>
+                <input asp-for="RegNr" class="form-control" />
+                <span asp-validation-for="RegNr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nickname" class="control-label"></label>
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sex" class="control-label"></label>
+                <select asp-for="Sex" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeathDate" class="control-label"></label>
+                <input asp-for="DeathDate" type="date" class="form-control" />
+                <span asp-validation-for="DeathDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class = "control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hairlayers" class="control-label"></label>
+                <input asp-for="Hairlayers" class="form-control" />
+                <span asp-validation-for="Hairlayers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OriginalBreederID" class="control-label"></label>
+                <input asp-for="OriginalBreederID" class="form-control" />
+                <span asp-validation-for="OriginalBreederID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentOwnerID" class="control-label"></label>
+                <input asp-for="CurrentOwnerID" class="form-control" />
+                <span asp-validation-for="CurrentOwnerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MotherDogID" class="control-label"></label>
+                <input asp-for="MotherDogID" class="form-control" />
+                <span asp-validation-for="MotherDogID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FatherDogID" class="control-label"></label>
+                <input asp-for="FatherDogID" class="form-control" />
+                <span asp-validation-for="FatherDogID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Merits" class="control-label"></label>
+                <input asp-for="Merits" class="form-control" />
+                <span asp-validation-for="Merits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titles" class="control-label"></label>
+                <input asp-for="Titles" class="form-control" />
+                <span asp-validation-for="Titles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

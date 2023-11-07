@@ -1,0 +1,255 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Woof;
+using Woof.Models;
+
+namespace Woof.Controllers
+{
+    public class UsersController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+
+        public UsersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            // Fetch the user data
+            var users = _context.Users.ToList();
+
+            // Fetch the roles and create a dictionary to map RoleID to RoleName
+            var roles = _context.Roles.ToDictionary(role => role.RoleID, role => role.RoleName);
+
+            // Pass the users and roles to the view
+            ViewData["Roles"] = roles;
+            return View(users);
+        }
+
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.UserID == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        // GET: Users/Create
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
+        // POST: Users/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("UserID,Username,Email,Password,RegistrationDate,KennelID,RoleID")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check if a user with the same email already exists in the database
+                if (_context.Users.Any(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "A user with this email already exists.");
+                    return View(user);
+                }
+
+                user.RoleID = 1; // Assign RoleID here, as you are doing
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+
+
+        // GET: Users/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Load roles and store them in ViewBag.Roles
+            ViewBag.Roles = new SelectList(_context.Roles, "RoleID", "RoleName");
+
+            return View(user);
+        }
+
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,Username,Email,Password,RegistrationDate,KennelID,RoleID")] User user)
+        {
+            if (id != user.UserID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Check if the edited email already exists in the database
+                if (!_context.Users.Any(u => u.UserID != user.UserID && u.Email == user.Email))
+                {
+                    try
+                    {
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!UserExists(user.UserID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("Email", "This email already exists in the database.");
+                }
+            }
+            return View(user);
+        }
+
+
+        // GET: Users/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.UserID == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+            }
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PerformLogin(LoginViewModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check if the email exists in the database
+                var user = _context.Users.FirstOrDefault(u => u.Email == loginModel.Email);
+
+                if (user != null)
+                {
+                    // Check if the password matches (you should use secure password hashing here)
+                    if (user.Password == loginModel.Password)
+                    {
+                        // User is authenticated
+                        Debug.WriteLine("User is authenticated"); // Add this debug message
+
+                        // Store user information in session
+                        HttpContext.Session.SetString("UserID", user.UserID.ToString());
+                        HttpContext.Session.SetString("Username", user.Username);
+                        HttpContext.Session.SetString("Role", user.RoleID.ToString());
+
+                        // Check if session variables are set correctly
+                        var UserIDFromSession = HttpContext.Session.GetString("UserID");
+                        var usernameFromSession = HttpContext.Session.GetString("Username");
+                        var roleFromSession = HttpContext.Session.GetString("Role");
+
+                        Debug.WriteLine("UserID in Session: " + UserIDFromSession); // Add this debug message
+                        Debug.WriteLine("Username in Session: " + usernameFromSession); // Add this debug message
+                        Debug.WriteLine("Role in Session: " + roleFromSession); // Add this debug message
+
+                        // Redirect to the home page
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        // Incorrect password
+                        ViewBag.ErrorMessage = "Incorrect password.";
+                        Debug.WriteLine("Incorrect password"); // Add this debug message
+                    }
+                }
+                else
+                {
+                    // Email doesn't exist
+                    ViewBag.ErrorMessage = "There's no account linked to this email.";
+                    Debug.WriteLine("Email doesn't exist"); // Add this debug message
+                }
+            }
+
+            return View("Login", loginModel);
+        }
+
+
+
+
+
+
+        private bool UserExists(int id)
+        {
+          return (_context.Users?.Any(e => e.UserID == id)).GetValueOrDefault();
+        }
+    }
+}
