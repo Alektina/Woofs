@@ -48,11 +48,11 @@
         </dd>
     </dl>
 </div>
+<!-- Då roll 4 är Admin rollen för tillfället kan admins alltid redigera en user, detta är inte optimalt egentligen men får duga! -->
 <div>
-    @if (User.IsInRole("Admin") || Model.UserID.ToString() == Context.Session.GetString("UserID"))
+    @if (Context.Session.GetString("Role") == "4" || Model.UserID.ToString() == Context.Session.GetString("UserID"))
     {
         <a asp-action="Edit" asp-route-id="@Model.UserID">Edit</a>
- 
     }
     <a asp-action="Index">Back to List</a>
 </div>
