@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Woof.Models.User>
+@model IEnumerable<Woof.Models.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -54,9 +54,13 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.UserID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.UserID">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.UserID">Details</a>
+                    @if (Context.Session.GetString("Role") == "4")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> 
+                    
+                        <a asp-action = "Delete" asp-route-id = "@item.UserID" > Delete </a>
+                        }
                 </td>
             </tr>
         }
