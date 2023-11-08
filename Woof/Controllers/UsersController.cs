@@ -243,7 +243,14 @@ namespace Woof.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            // Clear the session
+            HttpContext.Session.Clear();
 
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
