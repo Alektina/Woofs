@@ -49,6 +49,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserID">Edit</a> |
+    @if (User.IsInRole("Admin") || Model.UserID.ToString() == Context.Session.GetString("UserID"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.UserID">Edit</a>
+ 
+    }
     <a asp-action="Index">Back to List</a>
 </div>
