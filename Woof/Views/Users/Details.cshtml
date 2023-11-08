@@ -53,6 +53,11 @@
     @if (Context.Session.GetString("Role") == "4" || Model.UserID.ToString() == Context.Session.GetString("UserID"))
     {
         <a asp-action="Edit" asp-route-id="@Model.UserID">Edit</a>
+
+        <form asp-controller="Users" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-link">Logout</button>
+        </form>
+
     }
     <a asp-action="Index">Back to List</a>
 </div>
