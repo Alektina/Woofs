@@ -1,4 +1,4 @@
-﻿@model Woof.Models.User
+@model Woof.Models.User
 
 @{
     ViewData["Title"] = "Edit";
@@ -29,21 +29,20 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RegistrationDate" class="control-label"></label>
-                <input asp-for="RegistrationDate" class="form-control" />
-                <span asp-validation-for="RegistrationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="KennelID" class="control-label"></label>
                 <input asp-for="KennelID" class="form-control" />
                 <span asp-validation-for="KennelID" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @if (Context.Session.GetString("Role") == "4")
+            {
+                <div class="form-group">
+
                 <label asp-for="RoleID" class="control-label"></label>
                 <select asp-for="RoleID" asp-items="ViewBag.Roles" class="form-control">
                 </select>
                 <span asp-validation-for="RoleID" class="text-danger"></span>
             </div>
+            }
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -59,3 +58,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
