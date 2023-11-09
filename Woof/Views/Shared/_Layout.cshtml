@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,25 +23,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Countries">Countries</a>
-                        </li>
+                     
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Dogs">Dogs</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Kennels">Kennels</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Roles">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Users">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Images">Images</a>
-                        </li>
-                        
+
+                        @if (Context.Session.GetString("Role") == "4")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Roles">Roles</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Users">Users</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Countries">Countries</a>
+                            </li>
+                        }
+
 
                         <!-- Tar oss till den inloggade användarens Details, kan behöva ändras senare -->
                         <li class="nav-item">
@@ -88,3 +93,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
