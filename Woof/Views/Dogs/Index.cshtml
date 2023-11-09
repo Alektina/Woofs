@@ -180,10 +180,14 @@
                     @Html.DisplayFor(modelItem => item.Titles)
                 </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DogID">Edit</a> <br>
-                <a asp-action="Details" asp-route-id="@item.DogID">Details</a><br>
-                <a asp-action="Delete" asp-route-id="@item.DogID">Delete</a>
-            </td>
+    <a asp-action="Details" asp-route-id="@item.DogID">Details</a>
+        @if (Context.Session.GetString("Role") == "4")
+        {
+            <a asp-action="Edit" asp-route-id="@item.DogID">Edit</a>
+
+            <a asp-action="Delete" asp-route-id="@item.DogID"> Delete </a>
+        }
+</td>
         </tr>
 }
     </tbody>
