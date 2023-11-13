@@ -28,9 +28,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Dogs">Dogs</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Kennels">Kennels</a>
-                        </li>
+                        <!--
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Kennels">Kennels</a>
+</li> -->
 
                         @if (Context.Session.GetString("Role") == "4")
                         {
