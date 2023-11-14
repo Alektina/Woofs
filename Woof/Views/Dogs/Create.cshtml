@@ -1,4 +1,4 @@
-﻿@model Woof.Models.Dog
+@model Woof.Models.Dog
 
 @{
     ViewData["Title"] = "Create";
@@ -64,16 +64,6 @@
                 <label asp-for="Size" class="control-label"></label>
                 <input asp-for="Size" class="form-control" />
                 <span asp-validation-for="Size" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OriginalBreederID" class="control-label"></label>
-                <input asp-for="OriginalBreederID" class="form-control" />
-                <span asp-validation-for="OriginalBreederID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CurrentOwnerID" class="control-label"></label>
-                <input asp-for="CurrentOwnerID" class="form-control" />
-                <span asp-validation-for="CurrentOwnerID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MotherDogID" class="control-label"></label>
