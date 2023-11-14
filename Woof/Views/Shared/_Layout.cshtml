@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Woof.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -28,10 +29,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Dogs">Dogs</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="Medlem" asp-controller="Home">Medlem</a>
+                        </li>
+
                         <!--
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Kennels">Kennels</a>
-</li> -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Kennels">Kennels</a>
+                        </li> -->
 
                         @if (Context.Session.GetString("Role") == "4")
                         {
@@ -83,15 +88,56 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Woof - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Kundtjänst</h4>
+                <ul>
+                    <li><a href="~/mail.html"> Använd vårt kontaktformulär </a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="~/hundregister.html">Hundregistret FAQ </a></li>
+                    <li><a href="~/felrapportering.html">Felrapportering </a></li>
+                    <li><a href="~/inloggning.html">Integritetspolicy </a></li>
+                    <li><a href="~/inloggning.html">Inloggning FAQ </a></li>
+
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Om oss</h4>
+                <ul>
+                    <li><a href="~/omoss.html"> Om oss </a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Följ oss</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-paypal"></i>
+                    <i class="fab fa-cc-amex"></i>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        <div class="copyright-text">
+            &copy; 2023 ccpedigrees
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
