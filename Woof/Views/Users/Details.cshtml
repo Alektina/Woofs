@@ -30,16 +30,6 @@
         </dd>
         }
 
-        @if (!string.IsNullOrWhiteSpace(Model.Password))
-        {
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Password)
-        </dd>
-        }
-
         @if (Model.RegistrationDate != null)
         {
             <dt class = "col-sm-2">
@@ -86,6 +76,8 @@
 
     } 
 </div>
+
+
 
 
 
