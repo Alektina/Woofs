@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Woof.Models.Dog>
+@model IEnumerable<Woof.Models.Dog>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,11 +6,22 @@
 
 }
 
-<h1>Index</h1>
+<style>
+    table,h1 {
+        margin-left: -250px; 
+    }
+</style>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<h1>Dogs</h1>
+
+@if (!string.IsNullOrEmpty(Context.Session.GetString("Role")))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 
 
 <table class="table">
@@ -46,9 +57,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OriginalBreederID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CurrentOwnerID)
@@ -130,9 +138,6 @@
                 @Html.DisplayFor(modelItem => item.Size)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OriginalBreederID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CurrentOwnerID)
             </td>
                 <td>
@@ -180,14 +185,14 @@
                     @Html.DisplayFor(modelItem => item.Titles)
                 </td>
             <td>
-    <a asp-action="Details" asp-route-id="@item.DogID">Details</a>
-        @if (Context.Session.GetString("Role") == "4")
-        {
-            <a asp-action="Edit" asp-route-id="@item.DogID">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.DogID">Details</a>
+                    @if (Context.Session.GetString("Role") == "4")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.DogID">Edit</a>
 
-            <a asp-action="Delete" asp-route-id="@item.DogID"> Delete </a>
-        }
-</td>
+                        <a asp-action="Delete" asp-route-id="@item.DogID"> Delete </a>
+                    }
+            </td>
         </tr>
 }
     </tbody>
