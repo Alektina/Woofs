@@ -49,6 +49,8 @@ namespace Woof.Controllers
                 return NotFound();
             }
 
+
+
             return View(user);
         }
 
@@ -64,7 +66,7 @@ namespace Woof.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Username,Email,Password,RegistrationDate,KennelID,RoleID")] User user)
+        public async Task<IActionResult> Create([Bind("UserID,Username,Email,Password,RegistrationDate,OwnedDogs,KennelID,RoleID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -254,10 +256,37 @@ namespace Woof.Controllers
 
 
 
+        public IActionResult ShowDogs(int userId)
+        {
+            // Retrieve the User with corresponding UserID
+            var user = _context.Users.FirstOrDefault(u => u.UserID == userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve a list of dogs with matching CurrentOwnerID
+            var userDogs = _context.Dogs
+                .Where(d => d.CurrentOwnerID == userId)
+                .ToList();
+
+            ViewData["UserName"] = user.Username;
+            ViewData["UserID"] = user.UserID; 
+
+            return View(userDogs);
+        }
+
+
+
+
+
+
         private bool UserExists(int id)
         {
           return (_context.Users?.Any(e => e.UserID == id)).GetValueOrDefault();
         }
     }
 }
+
 
