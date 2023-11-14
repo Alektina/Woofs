@@ -24,7 +24,7 @@
         {
             RegistrationDate = DateTime.Now;
         }
-
+        public int? OwnedDogs { get; set; }
         public int? KennelID { get; set; } // Links with the Kennels table, can be null
         public int RoleID { get; set; } // Links with the Roles table
     }
