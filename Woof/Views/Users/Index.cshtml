@@ -26,6 +26,9 @@
                 @Html.DisplayNameFor(model => model.RegistrationDate)
             </th>
             <th>
+                Dogs
+            </th>
+            <th>
                 Role
             </th>
             <th></th>
@@ -48,6 +51,9 @@
                     @Html.DisplayFor(modelItem => item.RegistrationDate)
                 </td>
                 <td>
+                        <a asp-action="ShowDogs" asp-route-userId="@item.UserID" class="btn btn-info">Show Dogs</a>   
+                </td>
+                <td>
                     @if (roles.ContainsKey(item.RoleID))
                     {
                         @roles[item.RoleID]
@@ -57,12 +63,12 @@
                     <a asp-action="Details" asp-route-id="@item.UserID">Details</a>
                     @if (Context.Session.GetString("Role") == "4")
                     {
-                        <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> 
-                    
-                        <a asp-action = "Delete" asp-route-id = "@item.UserID" > Delete </a>
-                        }
+                        <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.UserID"> Delete </a>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
