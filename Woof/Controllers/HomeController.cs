@@ -26,6 +26,16 @@ namespace Woof.Controllers
             return View();
         }
 
+public IActionResult Medlem()
+{
+    return View();
+}
+
+public IActionResult WIP()
+{
+    return View();
+}
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
